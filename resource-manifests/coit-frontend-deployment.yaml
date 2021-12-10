@@ -21,8 +21,8 @@ spec:
         app: coit-frontend                                  # 6
     spec:
       containers:
-        - image: coitlearning/coit-frontend:1.0.0
-          imagePullPolicy: Always                         # 7
+        - image: coit-frontend
+          imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
           ports:
             - containerPort: 80

@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: simple-microservice
+build:
+  artifacts:
+  - image: coit-backend1
+    context: coit-backend1
+    docker:
+      dockerfile: Dockerfile-multistage
+  - image: coit-backend2
+    context: coit-backend2
+    docker:
+      dockerfile: Dockerfile
+  - image: coit-frontend
+    context: coit-frontend
+    docker:
+      dockerfile: Dockerfile-multistage
+deploy:
+  kubectl:
+    manifests:
+    - resource-manifests/coit-backend1-deployment.yaml
+    - resource-manifests/coit-backend2-deployment.yaml
+    - resource-manifests/coit-frontend-deployment.yaml
+    - resource-manifests/service-coit-backend1-lb.yaml
+    - resource-manifests/service-coit-backend2.yaml
+    - resource-manifests/service-coit-frontend-lb.yaml
