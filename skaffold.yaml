@@ -3,6 +3,10 @@ kind: Config
 metadata:
   name: simple-microservice
 build:
+  tagPolicy:
+    dateTime: {}
+  local:
+    push: false
   artifacts:
   - image: coit-backend1
     context: coit-backend1
@@ -25,3 +29,14 @@ deploy:
     - resource-manifests/service-coit-backend1-lb.yaml
     - resource-manifests/service-coit-backend2.yaml
     - resource-manifests/service-coit-frontend-lb.yaml
+profiles:
+  - name: dev
+    activation:
+      - env: DEV=1
+      - kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
+        env: DEV=10
+    build:
+      local:
+        push: true
+    deploy:
+      kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
