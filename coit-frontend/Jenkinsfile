@@ -8,12 +8,12 @@ pipeline{
         }
         stage("Setup Env"){
             steps{
-                sh """ssh -o StrictHostKeyChecking=no ubuntu@172.31.47.238 'apt-get -y install apache2'"""
+                sh "echo Installing Apache"
             }
         }
-        stage("A"){
+        stage("Deploy"){
             steps{
-                sh """scp -r -o StrictHostKeyChecking=no  coit-frontend/build ubuntu@172.31.47.238:/var/www/html"""
+                sh "echo Deploying the build folder"
             }
         }
     }
