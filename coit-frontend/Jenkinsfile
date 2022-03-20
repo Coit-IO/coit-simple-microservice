@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+    stages{
+        stage("Clone"){
+            steps{
+                sh 'git clone https://github.com/Coit-IO/coit-simple-microservice.git .'
+            }
+        }
+        stage("Build"){
+            steps{
+                sh 'cd coit-frontend && npm install && npm run build'
+            }
+        }
+        stage("Setup Env"){
+            steps{
+                sh """ssh -o StrictHostKeyChecking=no ubuntu@172.31.47.238 'apt-get -y install apache2'"""
+            }
+        }
+        stage("A"){
+            steps{
+                sh """scp -r -o StrictHostKeyChecking=no  coit-frontend/build ubuntu@172.31.47.238:/var/www/html"""
+            }
+        }
+    }
+    post{
+        success{
+            archiveArtifacts artifacts: '**/build', followSymlinks: false
+        }
+        failure{
+            emailext body: 'Build has failed. Please check.', subject: 'Build Failed ', to: 'basil@coit.io'
+        }
+    }
+}
