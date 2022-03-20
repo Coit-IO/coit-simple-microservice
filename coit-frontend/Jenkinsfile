@@ -16,6 +16,11 @@ pipeline{
                 sh "echo Deploying the build folder"
             }
         }
+        stage("Cleanup"){
+            steps{
+                deleteDir()
+            }
+        }
     }
     post{
         success{
