@@ -1,11 +1,6 @@
 pipeline{
     agent any
     stages{
-        stage("Clone"){
-            steps{
-                sh 'git clone https://github.com/Coit-IO/coit-simple-microservice.git .'
-            }
-        }
         stage("Build"){
             steps{
                 sh 'cd coit-frontend && npm install && npm run build'
