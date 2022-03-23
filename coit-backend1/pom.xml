@@ -5,7 +5,7 @@
 
 	<groupId>com.sa.web</groupId>
 	<artifactId>sentiment-analysis-web</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>jar</packaging>
 
 	<name>sentiment-analysis-web</name>
@@ -45,14 +45,14 @@
 	</build>
 	<distributionManagement>
 		<repository>
-			<id>coit-maven-repo-release</id>
-			<name>coit-maven-repo-release</name>
-			<url>http://52.66.178.125:8081/repository/coit-maven-repo-release/</url>
+			<id>coit-maven-repository-release</id>
+			<name>coit-maven-repository-release</name>
+			<url>http://15.206.212.92:8081/repository/coit-maven-repository-release/</url>
 		</repository>
 		<snapshotRepository>
-			<id>coit-maven-repo-snapshot</id>
-			<name>coit-maven-repo-snapshot</name>
-			<url>http://52.66.178.125:8081/repository/coit-maven-repo-snapshot/</url>
+			<id>coit-maven-repository-snapshot</id>
+			<name>coit-maven-repository-snapshot</name>
+			<url>http://15.206.212.92:8081/repository/coit-maven-repository-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
