@@ -1,22 +1,18 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
   name: simple-microservice
 build:
-  tagPolicy:
-    dateTime: {}
-  local:
-    push: false
   artifacts:
-  - image: coit-backend1
+  - image: coitlearning/coit-backend1
     context: coit-backend1
     docker:
       dockerfile: Dockerfile-multistage
-  - image: coit-backend2
+  - image: coitlearning/coit-backend2
     context: coit-backend2
     docker:
       dockerfile: Dockerfile
-  - image: coit-frontend
+  - image: coitlearning/coit-frontend
     context: coit-frontend
     docker:
       dockerfile: Dockerfile-multistage
@@ -26,17 +22,12 @@ deploy:
     - resource-manifests/coit-backend1-deployment.yaml
     - resource-manifests/coit-backend2-deployment.yaml
     - resource-manifests/coit-frontend-deployment.yaml
+    - resource-manifests/ingress-coit-frontend.yaml
     - resource-manifests/service-coit-backend1-lb.yaml
     - resource-manifests/service-coit-backend2.yaml
     - resource-manifests/service-coit-frontend-lb.yaml
-profiles:
-  - name: dev
-    activation:
-      - env: DEV=1
-      - kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
-        env: DEV=10
-    build:
-      local:
-        push: true
-    deploy:
-      kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
+    - resource-manifests/coit-backend1/coit-backend1-deployment.yaml
+    - resource-manifests/coit-backend2/coit-backend2-deployment.yaml
+    - resource-manifests/coit-backend2/service-coit-backend2.yaml
+    - resource-manifests/coit-frontend/coit-frontend-deployment.yaml
+    - resource-manifests/coit-frontend/service-coit-frontend-lb.yaml

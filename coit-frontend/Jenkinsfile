@@ -27,7 +27,16 @@ pipeline{
             archiveArtifacts artifacts: '**/build', followSymlinks: false
         }
         failure{
-            emailext body: 'Build has failed. Please check.', subject: 'Build Failed ', to: 'basil@coit.io'
+            emailext body: '''Jenkins has failed to build the Job. Please find the information below.
+
+                            Name of the Job: ${JOB_NAME}
+                            Build that failed: ${BUILD_NUMBER}
+
+                            Please check the logs at ${BUILD_URL}
+
+
+                            Thanks
+                            Jenkins''', subject: 'Failed ${JOB_NAME}', to: 'basil@coit.io'
         }
     }
 }
