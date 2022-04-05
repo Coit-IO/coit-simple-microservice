@@ -1,0 +1,13 @@
+skaffold
+skaffold.yaml.old
+coit-backend1/target/sentiment-analysis-web-0.0.1-SNAPSHOT.jar
+coit-backend1/target/sentiment-analysis-web-0.0.1-SNAPSHOT.jar.original
+coit-backend1/target/sentiment-analysis-web-0.0.1.jar
+coit-backend1/target/sentiment-analysis-web-0.0.1.jar.original
+coit-backend1/target/classes/com/sa/web/SentimentAnalysisWebApp.class
+coit-backend1/target/classes/com/sa/web/SentimentController.class
+coit-backend1/target/classes/com/sa/web/dto/SentenceDto.class
+coit-backend1/target/classes/com/sa/web/dto/SentimentDto.class
+coit-backend1/target/maven-archiver/pom.properties
+coit-backend1/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+coit-backend1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
