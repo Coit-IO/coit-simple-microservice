@@ -3,31 +3,107 @@ kind: Config
 metadata:
   name: simple-microservice
 build:
+  tagPolicy:
+    customTemplate:
+      template: "{{.DATE}}_{{.GIT}}"
+      components:
+      - name: DATE
+        dateTime:
+          format: "2006-01-02"
+          timezone: "UTC"
+      - name: GIT
+        gitCommit:
+          variant: AbbrevCommitSha
   artifacts:
-  - image: coitlearning/coit-backend1
+  - image: coit-backend1
     context: coit-backend1
     docker:
       dockerfile: Dockerfile-multistage
-  - image: coitlearning/coit-backend2
+  - image: coit-backend2
     context: coit-backend2
     docker:
       dockerfile: Dockerfile
-  - image: coitlearning/coit-frontend
+  - image: coit-frontend
     context: coit-frontend
     docker:
       dockerfile: Dockerfile-multistage
+  local:
+    push: false
 deploy:
   kubectl:
     manifests:
     - resource-manifests/coit-backend1-deployment.yaml
     - resource-manifests/coit-backend2-deployment.yaml
     - resource-manifests/coit-frontend-deployment.yaml
-    - resource-manifests/ingress-coit-frontend.yaml
     - resource-manifests/service-coit-backend1-lb.yaml
     - resource-manifests/service-coit-backend2.yaml
     - resource-manifests/service-coit-frontend-lb.yaml
-    - resource-manifests/coit-backend1/coit-backend1-deployment.yaml
-    - resource-manifests/coit-backend2/coit-backend2-deployment.yaml
-    - resource-manifests/coit-backend2/service-coit-backend2.yaml
-    - resource-manifests/coit-frontend/coit-frontend-deployment.yaml
-    - resource-manifests/coit-frontend/service-coit-frontend-lb.yaml
+profiles:
+  - name: dev
+    activation:
+      - env: CURRENTENV=dev
+    build:
+      artifacts:
+      - image: coit-backend1
+        context: coit-backend1
+        docker:
+          dockerfile: Dockerfile
+      - image: coit-backend2
+        context: coit-backend2
+        docker:
+          dockerfile: Dockerfile
+      - image: coit-frontend
+        context: coit-frontend
+        docker:
+          dockerfile: Dockerfile
+      local:
+        push: true
+    deploy:
+      kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
+      kubectl:
+        manifests:
+        - resource-manifests/coit-backend1-deployment.yaml
+        - resource-manifests/coit-backend2-deployment.yaml
+        - resource-manifests/coit-frontend-deployment.yaml
+        - resource-manifests/service-coit-backend1-lb.yaml
+        - resource-manifests/service-coit-backend2.yaml
+        - resource-manifests/service-coit-frontend-lb.yaml
+  - name: production
+    activation:
+      - env: CURRENTENV=prod
+    build:
+      artifacts:
+      - image: coit-backend1
+        context: coit-backend1
+        docker:
+          dockerfile: Dockerfile
+      - image: coit-backend2
+        context: coit-backend2
+        docker:
+          dockerfile: Dockerfile
+      - image: coit-frontend
+        context: coit-frontend
+        docker:
+          dockerfile: Dockerfile
+      local:
+        push: true
+    deploy:
+      kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
+      kubectl:
+        manifests:
+        - resource-manifests/coit-backend1-deployment.yaml
+        - resource-manifests/coit-backend2-deployment.yaml
+        - resource-manifests/coit-frontend-deployment.yaml
+        - resource-manifests/service-coit-backend1-lb.yaml
+        - resource-manifests/service-coit-backend2.yaml
+        - resource-manifests/service-coit-frontend-lb.yaml
+
+portForward:
+- resourceType: service
+  resourceName: coit-frontend-lb
+  port: 80
+  localPort: 4500 # *Optional*
+- resourceType: service
+  resourceName: coit-backend1-lb
+  port: 80
+  localPort: 4600 # *Optional*
