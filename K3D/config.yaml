@@ -8,11 +8,11 @@ kubeAPI:
   hostPort: "6445"
 image: rancher/k3s:v1.20.4-k3s1
 volumes:
-  - volume: /tmp:/app
+  - volume: C:\Users\srash\mydata:/app
     nodeFilters:
       - all
 ports:
-  - port: 8080:80
+  - port: 8081:80
     nodeFilters:
       - loadbalancer
   - port: 0.0.0.0:8443:443
@@ -34,10 +34,8 @@ options:
     switchCurrentContext: true
   runtime:
     gpuRequest: ""
-	  serversMemory: ""
-	  agenetsMemory: ""
     labels:
-      - label: app-coit-simple
-        nodeFilters:
-          - server:0
-		  - loadbalancer
+    - label: app-coit-simple
+      nodeFilters:
+      - server:0
+      - loadbalancer

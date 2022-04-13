@@ -1,25 +1,34 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
-  name: simple-microservice
+  name: coit-simple-microservice
 build:
   tagPolicy:
-    dateTime: {}
-  local:
-    push: false
+    customTemplate:
+      template: "{{.DATE}}_{{.GIT}}"
+      components:
+      - name: DATE
+        dateTime:
+          format: "2006-01-02"
+          timezone: "UTC"
+      - name: GIT
+        gitCommit:
+          variant: AbbrevCommitSha
   artifacts:
-  - image: coit-backend1
+  - image: srashtid/coit-backend1
     context: coit-backend1
     docker:
       dockerfile: Dockerfile-multistage
-  - image: coit-backend2
+  - image: srashtid/coit-backend2
     context: coit-backend2
     docker:
       dockerfile: Dockerfile
-  - image: coit-frontend
+  - image: srashtid/coit-frontend
     context: coit-frontend
     docker:
       dockerfile: Dockerfile-multistage
+  local:
+    push: true
 deploy:
   kubectl:
     manifests:
@@ -29,14 +38,12 @@ deploy:
     - resource-manifests/service-coit-backend1-lb.yaml
     - resource-manifests/service-coit-backend2.yaml
     - resource-manifests/service-coit-frontend-lb.yaml
-profiles:
-  - name: dev
-    activation:
-      - env: DEV=1
-      - kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
-        env: DEV=10
-    build:
-      local:
-        push: true
-    deploy:
-      kubeContext: arn:aws:eks:ap-south-1:210607809234:cluster/aws-mumbai-all
+portForward:
+- resourceType: service
+  resourceName: coit-frontend-lb
+  port: 80
+  localPort: 4500
+- resourceType: service
+  resourceName: coit-backend1-lb
+  port: 80
+  localPort: 4600
