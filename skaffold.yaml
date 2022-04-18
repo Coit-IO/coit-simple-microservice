@@ -21,7 +21,7 @@ build:
     docker:
       dockerfile: Dockerfile-multistage
 deploy:
-  kubectl: gke_cobalt-diorama-347102_us-central1-c_gcp-cluster
+  kubectl:
     manifests:
     - resource-manifests/coit-backend1-deployment.yaml
     - resource-manifests/coit-backend2-deployment.yaml
