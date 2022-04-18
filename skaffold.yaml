@@ -51,7 +51,7 @@ profiles:
       local:
         push: true
     deploy:
-      kubeContext: gke_trim-tide-339908_us-central1-c_practice-cluster
+      kubeContext: gke_cobalt-diorama-347102_us-central1-c_gcp-cluster
       kubectl:
         manifests:
         - resource-manifests/coit-backend1-deployment.yaml
@@ -83,7 +83,7 @@ profiles:
 #       local:
 #         push: true
 #     deploy:
-#       kubeContext: gke_trim-tide-339908_us-central1-c_practice-cluster
+#       kubeContext: gke_cobalt-diorama-347102_us-central1-c_gcp-cluster
 #       kubectl:
 #         manifests:
 #         - resource-manifests/coit-backend1-deployment.yaml
