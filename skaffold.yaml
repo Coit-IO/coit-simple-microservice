@@ -6,7 +6,7 @@ build:
   tagPolicy:
     dateTime: {}
   local:
-    push: false
+    push: true
   artifacts:
   - image: coit-backend1
     context: coit-backend1
@@ -21,7 +21,7 @@ build:
     docker:
       dockerfile: Dockerfile-multistage
 deploy:
-  kubectl:
+  kubectl: gke_cobalt-diorama-347102_us-central1-c_gcp-cluster
     manifests:
     - resource-manifests/coit-backend1-deployment.yaml
     - resource-manifests/coit-backend2-deployment.yaml
