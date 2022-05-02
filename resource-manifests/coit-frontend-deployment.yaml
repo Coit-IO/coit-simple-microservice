@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: coit-frontend
-  replicas: 2                                             # 2
+  replicas: 1                                             # 2
   minReadySeconds: 15
   strategy:
     type: RollingUpdate                                   # 3
@@ -20,16 +20,16 @@ spec:
       labels:
         app: coit-frontend                                  # 6
     spec:
-      volumes:
-        - name: frontend-data
-          persistentVolumeClaim:
-            claimName: store-persistent-volume-claim
       containers:
-        - image: coitlearning/coit-frontend:v7.0.0
+        - image: asia.gcr.io/devops-learning-347802/coit-frontend:1.0.0
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
           ports:
             - containerPort: 80
-          volumeMounts:
-            - mountPath: /app
-              name: frontend-data

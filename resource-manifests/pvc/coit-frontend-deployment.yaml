@@ -20,9 +20,21 @@ spec:
       labels:
         app: coit-frontend                                  # 6
     spec:
+      volumes:
+        - name: nginx-root
+          persistentVolumeClaim:
+            claimName: coit-frontend
+        - name: datastore
+          persistentVolumeClaim:
+            claimName: coit-frontend-fast
       containers:
-        - image: coitlearning/coit-frontend:v1
+        - image: asia.gcr.io/devops-learning-347802/coit-frontend:1.0.0
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
           ports:
             - containerPort: 80
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: nginx-root
+            - mountPath: /var/lib/sql
+              name: datastore

@@ -15,20 +15,20 @@ build:
         gitCommit:
           variant: AbbrevCommitSha
   artifacts:
-  - image: coit-backend1
+  - image: asia.gcr.io/devops-learning-347802/coit-backend1
     context: coit-backend1
     docker:
       dockerfile: Dockerfile-multistage
-  - image: coit-backend2
+  - image: asia.gcr.io/devops-learning-347802/coit-backend2
     context: coit-backend2
     docker:
       dockerfile: Dockerfile
-  - image: coit-frontend
+  - image: asia.gcr.io/devops-learning-347802/coit-frontend
     context: coit-frontend
     docker:
       dockerfile: Dockerfile-multistage
   local:
-    push: false
+    push: true
 deploy:
   kubectl:
     manifests:
