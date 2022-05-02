@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: coit-backend1
-  replicas: 2
+  replicas: 1
   minReadySeconds: 15
   strategy:
     type: RollingUpdate
@@ -21,11 +21,18 @@ spec:
         app: coit-backend1
     spec:
       containers:
-      - image: coitlearning/coit-backend1:v3
+      - image: asia.gcr.io/mydevops-training/coit-backend1:1.0.0
         imagePullPolicy: IfNotPresent
         name: coit-backend1
         env:
           - name: SA_LOGIC_API_URL
             value: "http://coit-backend2"
+        resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
         ports:
           - containerPort: 8080

@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler                                         # 1
 metadata:
-  name: coit-frontend
+  name: coit-backend2
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: coit-frontend
+    name: coit-backend2
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
