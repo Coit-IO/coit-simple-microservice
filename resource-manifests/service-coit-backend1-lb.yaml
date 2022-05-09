@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: coit-backend1-lb
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
