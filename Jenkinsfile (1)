@@ -31,7 +31,7 @@ pipeline{
 				script{
 				def FRONTENDDOCKER = 'Dockerfile-multistage'
 				//DockerFrontend = docker.build("srashtid/frontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
-				DockerFrontend = sh('docker build -t srashtid/coitfrontend:v1 -f Dockerfile-multistage .')
+				sh('docker build -t srashtid/coitfrontend:v1 -f Dockerfile-multistage . > DockerFrontend')
 				
 				}
 				} 
