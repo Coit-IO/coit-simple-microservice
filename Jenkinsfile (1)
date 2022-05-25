@@ -30,8 +30,8 @@ pipeline{
 				echo "path- $PATH"
 				script{
 				def FRONTENDDOCKER = 'Dockerfile-multistage'
-				DockerFrontend = docker.build("SrashtiD/frontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
-				//sh('docker build -t SrashtiD/coitfrontend:v1 -f Dockerfile-multistage .')
+				//DockerFrontend = docker.build("SrashtiD/frontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
+				sh('docker build -t SrashtiD/coitfrontend:v1 -f Dockerfile-multistage .')
 				
 				}
 				} 
@@ -53,8 +53,8 @@ pipeline{
                 dir('./coit-backend2'){
 				echo "path- $PATH"
 				script{
-				DockerBackend2 = docker.build("SrashtiD/backend2:${env.BUILD_TAG}")
-				//sh('docker build -t SrashtiD/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
+				//DockerBackend2 = docker.build("SrashtiD/backend2:${env.BUILD_TAG}")
+				sh('docker build -t SrashtiD/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
 				}
 				}
                 
@@ -77,8 +77,8 @@ pipeline{
                 dir('./coit-backend1'){
 					script{
 					def BACKENDDCKER = 'Dockerfile-multistage'
-					DockerBackend1 = docker.build("kollidatta/backend1:${env.BUILD_TAG}","-f ${BACKENDDCKER} .")
-					//sh('docker build -t kollidatta/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
+					//DockerBackend1 = docker.build("srashtiD/backend1:${env.BUILD_TAG}","-f ${BACKENDDCKER} .")
+					sh('docker build -t srashtiD/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
 					}
 				}
                 
