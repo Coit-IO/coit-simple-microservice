@@ -10,24 +10,15 @@ pipeline{
 		PATH = "$dockerHome/bin:$mavenHome/bin:$gitHome/bin:$PATH"
 	}
 	stages{
-		stage('Build Information'){
+		stage('Checkout'){
 			steps{
-				sh 'mvn --version'
-				sh 'docker --version'
-				echo "Build"
-				echo "PATH - $PATH"
-				echo "BUILD_NUMBER - $env.BUILD_NUMBER"
-				echo "BUILD_ID - $env.BUILD_ID"
-				echo "BUILD_TAG - $env.BUILD_TAG"
-				echo "JOB_NAME - $env.JOB_NAME"
-				//checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [],
-				// gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/SrashtiD/Coit-Jenkins']]]) 
+				checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [],
+				 gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/SrashtiD/coit-simple-microservice.git']]]) 
 			}	
 		}
         stage('Build '){
             steps{
                 dir('./coit-frontend'){
-				echo "path- $PATH"
 				script{
 				def FRONTENDDOCKER = 'Dockerfile-multistage'
 				DockerFrontend = docker.build("srashtid/coitfrontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
@@ -51,7 +42,6 @@ pipeline{
 		stage('Build backend2'){
             steps{
                 dir('./coit-backend2'){
-				echo "path- $PATH"
 				script{
 				DockerBackend2 = docker.build("srashtid/coitbackend2:${env.BUILD_TAG}")
 				//DockerBackend2 = sh('docker build -t srashtid/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
@@ -65,8 +55,8 @@ pipeline{
 				script{
 					//docker.withRegistry('','dockerhub'){
 					docker.withRegistry("http://${registryUrl}",registryCredential){
-						DockerBackend2.push();
-						//DockerBackend2.push('latest');
+					DockerBackend2.push();
+					//DockerBackend2.push('latest');
 					}
 				}
 
@@ -88,8 +78,8 @@ pipeline{
 			steps{
 				script{
 					docker.withRegistry("http://${registryUrl}",registryCredential){
-						DockerBackend1.push();
-						//DockerBackend1.push('latest');
+					DockerBackend1.push();
+					//DockerBackend1.push('latest');
 					}
 				}
 
