@@ -16,13 +16,13 @@ pipeline{
 				 gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/SrashtiD/coit-simple-microservice.git']]]) 
 			}	
 		}
-        stage('Build '){
+        stage('Build coit-frontend'){
             steps{
                 dir('./coit-frontend'){
 				script{
-				def FRONTENDDOCKER = 'Dockerfile-multistage'
-				DockerFrontend = docker.build("srashtid/coitfrontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
-				//sh('docker build -t srashtid/coitfrontend:v1 -f Dockerfile-multistage . > DockerFrontend')
+				//def FRONTENDDOCKER = 'Dockerfile-multistage'
+				//DockerFrontend = docker.build("srashtid/coitfrontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
+				sh "docker build -t srashtid/coitfrontend:v1 -f Dockerfile-multistage ."
 				
 				}
 				} 
@@ -32,8 +32,9 @@ pipeline{
 			steps{
 				script{
 					docker.withRegistry("http://${registryUrl}",registryCredential){
-						DockerFrontend.push();
+						//DockerFrontend.push();
 						//DockerFrontend.push('latest');
+						sh "docker push srashtid/coitfrontend:v1"
 					}
 				}
 
@@ -87,17 +88,5 @@ pipeline{
 		}
 		
     }
-	post {
-			always{
-				echo "Im awesome. I run always"
-			}
-			success{
-				echo 'I run when you are successful'
-			}
-			failure{
-				echo 'I run when you fail'
-			}
-		}
-	
 
 }
