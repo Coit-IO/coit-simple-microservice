@@ -30,7 +30,7 @@ pipeline{
 				echo "path- $PATH"
 				script{
 				def FRONTENDDOCKER = 'Dockerfile-multistage'
-				DockerFrontend = docker.build("srashtid/frontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
+				DockerFrontend = docker.build("srashtid/coitfrontend:${env.BUILD_TAG}","-f ${FRONTENDDOCKER} .")
 				//sh('docker build -t srashtid/coitfrontend:v1 -f Dockerfile-multistage . > DockerFrontend')
 				
 				}
@@ -42,7 +42,7 @@ pipeline{
 				script{
 					docker.withRegistry("http://${registryUrl}",registryCredential){
 						DockerFrontend.push();
-						DockerFrontend.push('latest');
+						//DockerFrontend.push('latest');
 					}
 				}
 
@@ -53,7 +53,7 @@ pipeline{
                 dir('./coit-backend2'){
 				echo "path- $PATH"
 				script{
-				DockerBackend2 = docker.build("srashtid/backend2:${env.BUILD_TAG}")
+				DockerBackend2 = docker.build("srashtid/coitbackend2:${env.BUILD_TAG}")
 				//DockerBackend2 = sh('docker build -t srashtid/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
 				}
 				}
@@ -66,7 +66,7 @@ pipeline{
 					//docker.withRegistry('','dockerhub'){
 					docker.withRegistry("http://${registryUrl}",registryCredential){
 						DockerBackend2.push();
-						DockerBackend2.push('latest');
+						//DockerBackend2.push('latest');
 					}
 				}
 
@@ -77,7 +77,7 @@ pipeline{
                 dir('./coit-backend1'){
 					script{
 					def BACKENDDCKER = 'Dockerfile-multistage'
-					DockerBackend1 = docker.build("srashtid/backend1:${env.BUILD_TAG}","-f ${BACKENDDCKER} .")
+					DockerBackend1 = docker.build("srashtid/coitbackend1:${env.BUILD_TAG}","-f ${BACKENDDCKER} .")
 					//DockerBackend1 = sh('docker build -t srashtid/coitbackend2:v1 -f ./coit-backend2/Dockerfile .')
 					}
 				}
@@ -89,7 +89,7 @@ pipeline{
 				script{
 					docker.withRegistry("http://${registryUrl}",registryCredential){
 						DockerBackend1.push();
-						DockerBackend1.push('latest');
+						//DockerBackend1.push('latest');
 					}
 				}
 
