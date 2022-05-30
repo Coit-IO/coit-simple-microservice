@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: coit-frontend
-  replicas: 4                                             # 2
+  replicas: 1                                             # 2
   minReadySeconds: 15
   strategy:
     type: RollingUpdate                                   # 3
@@ -21,15 +21,15 @@ spec:
         app: coit-frontend                                  # 6
     spec:
       volumes:
-        - name: nginx-data-root
+        - name: nginx-root
           persistentVolumeClaim:
-            claimName: nginx-root
+            claimName: coit-frontend-fast
       containers:
-        - image: 336808412643.dkr.ecr.ap-south-1.amazonaws.com/coit-frontend:latest
+        - image: coitlearning/coit-frontend:latest
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
           ports:
             - containerPort: 80
           volumeMounts:
             - mountPath: /var/www/html
-              name: nginx-data-root
+              name: nginx-root
