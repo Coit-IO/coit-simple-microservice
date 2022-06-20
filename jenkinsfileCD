@@ -3,7 +3,7 @@ pipeline{
 	
 	environment{
 			//dockerregistry= "srashtid/coit-simple-microservice"
-			dockerhubCredential = "dockerhub"
+			dockercredentials = "dockerhub"
 			tag = "1.0.0"
 			mavenHome = tool 'mymaven'
 			dockerHome = tool 'mydocker'
@@ -30,7 +30,7 @@ pipeline{
 								script{
 								def FRONTENDDOCKER= 'Dockerfile-multistage'
 								DockerFrontend= docker.build ("srashtid/coit-frontend:${tag}","-f ${FRONTENDDOCKER} .")
-								docker.withRegistry= ( "", dockerhubCredential ){
+								docker.withRegistry("",dockercredentials){
 								DockerFrontend.push();
 								}
 								}
@@ -44,7 +44,7 @@ pipeline{
 								script{
 								def BACKENDDOCKER= 'Dockerfile-multistage'
 								DockerBackend1= docker.build ("srashtid/coit-backend1:${tag}","-f ${BACKENDDOCKER} .")
-								docker.withRegistry= ( "", dockerhubCredential ){
+								docker.withRegistry("",dockercredentials){
 								DockerBackend1.push();
 								}
 								}
