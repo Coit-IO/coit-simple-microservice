@@ -30,7 +30,7 @@ pipeline{
 								script{
 								def FRONTENDDOCKER= 'Dockerfile-multistage'
 								DockerFrontend= docker.build ("srashtid/coit-frontend:${tag}","-f ${FRONTENDDOCKER} .")
-								docker.withRegistry= ("",dockerhubCredential){
+								docker.withRegistry= ( "", dockerhubCredential ){
 								DockerFrontend.push();
 								}
 								}
@@ -44,7 +44,7 @@ pipeline{
 								script{
 								def BACKENDDOCKER= 'Dockerfile-multistage'
 								DockerBackend1= docker.build ("srashtid/coit-backend1:${tag}","-f ${BACKENDDOCKER} .")
-								docker.withRegistry= ("",dockerhubCredential){
+								docker.withRegistry= ( "", dockerhubCredential ){
 								DockerBackend1.push();
 								}
 								}
