@@ -9,6 +9,7 @@ pipeline{
 			dockerHome = tool 'mydocker'
 			gitHome = tool 'myGit'
 			PATH = "$mavenHome/bin:$gitHome/bin:$dockerHome/bin:$PATH"
+			env.PATH = env.PATH + ";c:\\Windows\\System32"
 		}
 		stages{
 			stage('List Build Details'){
