@@ -1,0 +1,58 @@
+pipeline{
+	agent any 
+	
+	environment{
+			//dockerregistry= "srashtid/coit-simple-microservice"
+			dockerhubCredential = "dockerhub"
+			tag = "1.0.0"
+			mavenHome = tool 'mymaven'
+			dockerHome = tool 'mydocker'
+			gitHome = tool 'myGit'
+			PATH = "$mavenHome/bin:$gitHome/bin:$dockerHome/bin:$PATH"
+		}
+		stages{
+			stage('List Build Details'){
+				steps{
+					sh 'mvn --version'
+					sh 'git --version'
+					sh 'docker --version'
+					echo "BUILD_NUMBER - $env.BUILD_NUMBER"
+					echo "BUILD_ID - $env.BUILD_ID"
+					echo "BUILD_TAG - $env.BUILD_TAG"
+					//checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SrashtiD/coit-simple-microservice.git']]])
+				}
+			}
+			stage('build Images'){
+				parallel{
+					stage('build frontend'){
+						steps{
+							dir('./coit-frontend'){
+								script{
+								def FRONTENDDOCKER= 'Dockerfile-multistage'
+								DockerFrontend= docker.build ("srashtid/coit-frontend:${tag}","-f ${FRONTENDDOCKER} .")
+								docker.withRegistry= ("",dockerhubCredential){
+								DockerFrontend.push();
+								}
+								}
+							}
+						}
+					}
+			
+					stage('build backend1'){
+						steps{
+							dir('./coit-backend1'){
+								script{
+								def BACKENDDOCKER= 'Dockerfile-multistage'
+								DockerBackend1= docker.build ("srashtid/coit-backend1:${tag}","-f ${BACKENDDOCKER} .")
+								docker.withRegistry= ("",dockerhubCredential){
+								DockerBackend1.push();
+								}
+								}
+							}
+						}
+					}
+			
+				}
+			}
+		}
+}
