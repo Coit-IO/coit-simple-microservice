@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: coit-frontend
+  namespace: customer2
+  annotations:
+    ingressClassName: nginx
+spec:
+  rules:
+  - host: "customer2.basilportfolio.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: coit-frontend-lb
+            port:
+              number: 80
