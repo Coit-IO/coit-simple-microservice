@@ -19,9 +19,10 @@ spec:
     metadata:
       labels:
         app: coit-frontend                                  # 6
+        app.kubernetes.io/name: coit-frontend
     spec:
       containers:
-        - image: coitlearning/coit-frontend:latest
+        - image: coitlearning/coit-frontend-devsecops:v27
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
           ports:
