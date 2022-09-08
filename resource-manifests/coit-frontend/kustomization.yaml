@@ -1,0 +1,43 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - coit-frontend-deployment.yaml
+  - service-coit-frontend-lb.yaml
+  - coit-frontend-ingress.yaml
+
+patches:
+- path: coit-frontend-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: coit-frontend
+
+namePrefix: customer1-
+nameSuffix: -myapp
+commonLabels:
+  customer: customer1 
+  location: mumbai
+  managed-by: kustomize
+
+images:
+  - newName: coitlearning/coit-frontend
+    newTag: v3
+    name: coitlearning/coit-frontend
+
+configMapGenerator:
+- name: coit-frontend-config
+  literals:
+  - JAVA_HOME=/opt/java/jdk
+  - JAVA_TOOL_OPTIONS=-agentlib:hprof
+  - JAVA_URL="coit-backend1:5000"
+- name: coit-frontend-props
+  files:
+  - config.properties
+  - provider.properties
+- name: values-from-props
+  envs:
+  - config.properties
+  - provider.properties
+

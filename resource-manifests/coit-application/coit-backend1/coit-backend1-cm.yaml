@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coit-backend1-config
+data:
+  python-url: http://coit-backend2
+  dbname: abcd
+  api-key: hgfdgsud634uyhfjdhfkeyh

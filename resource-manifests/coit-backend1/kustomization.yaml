@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - coit-backend1-cm-files.yaml
+  - coit-backend1-cm.yaml
+  - coit-backend1-deployment.yaml
+  - coit-backend1-ingress.yaml
+  - coit-backend1-pvc-staticfiles.yaml
+  - coit-backend1-secrets.yaml
+  - coit-backend1-pvc.yaml
+  - service-coit-backend1-lb.yaml
+
+replicas:
+- name: coit-backend1
+  count: 1

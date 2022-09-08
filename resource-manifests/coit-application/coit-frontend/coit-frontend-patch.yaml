@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment                                          # 1
+metadata:
+  name: coit-frontend
+spec:
+    spec:
+      containers:
+        - image: coitlearning/coit-frontend:v3
+          imagePullPolicy: Always                         # 7
+          name: coit-frontend
+          ports:
+            - containerPort: 8080

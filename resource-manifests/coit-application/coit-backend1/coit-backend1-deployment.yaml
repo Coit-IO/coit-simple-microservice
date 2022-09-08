@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coit-backend1
+  labels:
+    app: coit-backend1
+spec:
+  selector:
+    matchLabels:
+      app: coit-backend1
+  replicas: 3
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: coit-backend1
+    spec:
+      containers:
+      - image: coitlearning/coit-backend1:latest
+        imagePullPolicy: IfNotPresent
+        name: coit-backend1
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - mountPath: /mnt
+            name: config-files
+          - mountPath: /var/lib/mysql
+            name: myappdata
+      volumes:
+        - name: config-files
+          configMap:
+            name: coit-backend1-cm-files
+        - name: myappdata
+          persistentVolumeClaim:
+            claimName: coit-backend1-myappdata

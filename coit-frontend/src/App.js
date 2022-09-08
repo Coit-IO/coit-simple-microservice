@@ -20,7 +20,7 @@ class App extends Component {
     };
 
     analyzeSentence() {
-        fetch('http://coit-backend1.kops.devopsdoor.com/sentiment', {
+        fetch('http://54.163.98.246:8080/sentiment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

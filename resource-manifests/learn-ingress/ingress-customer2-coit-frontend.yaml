@@ -6,6 +6,7 @@ metadata:
   annotations:
     ingressClassName: nginx
 spec:
+  ingressClassName: nginx
   rules:
   - host: "customer2.basilportfolio.com"
     http:

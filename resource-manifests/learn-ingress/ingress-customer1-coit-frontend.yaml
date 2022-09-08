@@ -2,10 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: coit-frontend
-  namespace: customer1
-  annotations:
-    ingressClassName: nginx
+  namespace: customer1    
 spec:
+  ingressClassName: nginx
   rules:
   - host: "customer1.basilportfolio.com"
     http:
