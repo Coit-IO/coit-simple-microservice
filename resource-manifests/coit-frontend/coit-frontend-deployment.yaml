@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: coit-frontend
-  replicas: 1                                             # 2
+  replicas: 3                                             # 2
   minReadySeconds: 15
   strategy:
     type: RollingUpdate                                   # 3
@@ -24,6 +24,25 @@ spec:
         - image: coitlearning/coit-frontend:v1
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
+          livenessProbe:
+            exec:
+              command:
+              - ls
+              - /
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250M
+            limits: 
+              cpu: 150m
+              memory: 450M
           ports:
             - containerPort: 80
           env:

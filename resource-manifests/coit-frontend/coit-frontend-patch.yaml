@@ -3,6 +3,7 @@ kind: Deployment                                          # 1
 metadata:
   name: coit-frontend
 spec:
+  template:
     spec:
       containers:
         - image: coitlearning/coit-frontend:v3
