@@ -21,7 +21,7 @@ spec:
         app: coit-backend2
     spec:
       containers:
-        - image: coitlearning/coit-backend2:latest
+        - image: coitlearning/coit-backend2:v1
           imagePullPolicy: IfNotPresent
           name: coit-backend2
           ports:

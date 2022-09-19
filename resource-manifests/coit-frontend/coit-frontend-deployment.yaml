@@ -20,6 +20,7 @@ spec:
       labels:
         app: coit-frontend                                  # 6
     spec:
+      serviceAccountName: coit-frontend
       containers:
         - image: coitlearning/coit-frontend:v1
           imagePullPolicy: IfNotPresent                         # 7
@@ -38,7 +39,7 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              cpu: 100m
+              cpu: 10m
               memory: 250M
             limits: 
               cpu: 150m

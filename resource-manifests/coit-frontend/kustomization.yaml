@@ -4,7 +4,9 @@ kind: Kustomization
 resources:
   - coit-frontend-deployment.yaml
   - service-coit-frontend-lb.yaml
-  - coit-frontend-ingress.yaml
+  - coit-frontend-hpa.yaml
+  - coit-frontend-sa.yaml
+  - coit-frontend-role-binding.yaml
 
 patches:
 - path: coit-frontend-patch.yaml
