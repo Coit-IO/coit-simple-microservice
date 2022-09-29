@@ -18,8 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Docker Login
         env:
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -29,7 +27,7 @@ jobs:
 
       - name: Build the container Image
         run: | 
-          docker build coit-frontend -t coitlearning/coit-frontend:latest -f coit-frontend/Dockerfile-dgsdg
+          docker build coit-frontend -t coitlearning/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
 
       - name: Push the container Image
         run: | 
