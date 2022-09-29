@@ -27,11 +27,11 @@ jobs:
 
       - name: Build the container Image
         run: | 
-          docker build coit-frontend -t coitlearning/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
+          docker build coit-frontend -t 9676164428/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
 
       - name: Push the container Image
         run: | 
-          docker push coitlearning/coit-frontend:latest
+          docker push 9676164428/coit-frontend:latest
 
       
           
