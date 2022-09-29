@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI for coit-frontend
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "develop" branch
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  buildandpush:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker Login
+        env:
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+
+      - name: Build the container Image
+        run: | 
+          docker build coit-frontend -t coitlearning/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
+
+      - name: Push the container Image
+        run: | 
+          docker push coitlearning/coit-frontend:latest
+
+      
+          
