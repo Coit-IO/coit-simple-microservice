@@ -41,6 +41,14 @@ jobs:
             -Dsonar.host.url=$sonarqube_url \
             -Dsonar.login=$api_key 
 
+      - name: Run Unit Tests
+        run: | 
+          npm test
+
+      - name: Check the Vulnaribilities of Dependencies 
+        run: | 
+          npm audit 
+
       - name: Docker Login
         env:
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
