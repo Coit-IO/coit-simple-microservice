@@ -18,6 +18,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+      - name: Setup Sonar-Scanner  
+        env:
+          version: 4.7.0.2747-linux
+        run: |
+          wget "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$version.zip"
+          unzip sonar-scanner-cli-$version.zip -d $HOME/sonarqube
+          chmod 755 $HOME/sonarqube/sonar-scanner-$version/bin/sonar-scanner
+
+      - name: Scan the project
+        env: 
+          sonarqube_project: ${{ secrets.SONARQUBE_PROJECT }} 
+          api_key: ${{ secrets.API_KEY }}
+          sonarqube_url: ${{ secrets.SONARQUBE_URL }}
+        run: |
+          cd coit-frontend 
+          $HOME/sonarqube/sonar-scanner-$version/bin/sonar-scanner  \
+            -Dsonar.projectKey=$sonarqube_project \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=$sonarqube_url \
+            -Dsonar.login=$api_key 
+
       - name: Docker Login
         env:
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
