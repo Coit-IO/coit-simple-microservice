@@ -16,6 +16,8 @@ on:
 jobs:
   buildandpush:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
     steps:
       - name: Docker Login
@@ -27,7 +29,7 @@ jobs:
 
       - name: Build the container Image
         run: | 
-          docker build coit-simple-microservice/coit-frontend -t 9676164428/coit-frontend:latest -f coit-simple-microservice/coit-frontend/Dockerfile-multistage
+          docker build coit-frontend -t 9676164428/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
 
       - name: Push the container Image
         run: | 
