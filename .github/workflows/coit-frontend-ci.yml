@@ -13,6 +13,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  sonarscannerversion: 4.7.0.2747-linux
+
 jobs:
   buildandpush:
     runs-on: ubuntu-latest
@@ -20,12 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Sonar-Scanner  
-        env:
-          version: 4.7.0.2747-linux
         run: |
-          wget "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$version.zip"
-          unzip sonar-scanner-cli-$version.zip -d $HOME/sonarqube
-          chmod 755 $HOME/sonarqube/sonar-scanner-$version/bin/sonar-scanner
+          wget "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$sonarscannerversion.zip"
+          unzip sonar-scanner-cli-$sonarscannerversion.zip -d $HOME/sonarqube
+          chmod 755 $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner
 
       - name: Scan the project
         env: 
@@ -34,7 +35,7 @@ jobs:
           sonarqube_url: ${{ secrets.SONARQUBE_URL }}
         run: |
           cd coit-frontend 
-          $HOME/sonarqube/sonar-scanner-$version/bin/sonar-scanner  \
+          $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner  \
             -Dsonar.projectKey=$sonarqube_project \
             -Dsonar.sources=. \
             -Dsonar.host.url=$sonarqube_url \
