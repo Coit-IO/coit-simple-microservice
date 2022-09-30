@@ -43,10 +43,12 @@ jobs:
 
       - name: Run Unit Tests
         run: | 
+          cd coit-frontend
           npm test || true
 
       - name: Check the Vulnaribilities of Dependencies 
         run: | 
+          cd coit-frontend
           npm audit || true
 
       - name: Docker Login
