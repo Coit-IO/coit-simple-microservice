@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment                                          # 1
+metadata:
+  name: coit-frontend
+  labels:
+    app: coit-frontend
+spec:
+  selector:
+    matchLabels:
+      app: coit-frontend
+  replicas: 2                                             # 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate                                   # 3
+    rollingUpdate: 
+      maxUnavailable: 1                                   # 4
+      maxSurge: 1                                         # 5
+  template:
+    metadata:
+      labels:
+        app: coit-frontend                                  # 6
+        app.kubernetes.io/name: coit-frontend
+    spec:
+      containers:
+        - image: coitlearning/coit-frontend:latest
+          imagePullPolicy: IfNotPresent                         # 7
+          name: coit-frontend
+          ports:
+            - containerPort: 80
