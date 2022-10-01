@@ -1,4 +1,4 @@
-name: CI for coit-frontend
+name: Deploy to production
 on:
   create:
     tags:
