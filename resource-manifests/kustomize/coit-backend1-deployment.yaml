@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coit-backend1
+  labels:
+    app: coit-backend1
+spec:
+  selector:
+    matchLabels:
+      app: coit-backend1
+  replicas: 3
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: coit-backend1
+    spec:
+      containers:
+      - image: coitlearning/coit-backend1:v1
+        imagePullPolicy: IfNotPresent
+        name: coit-backend1
+        ports:
+          - containerPort: 8080
+        env:
+          - name: SA_LOGIC_API_URL
+            valueFrom:
+              configMapKeyRef:
+                name: coit-backend1-config 
+                key: python-url

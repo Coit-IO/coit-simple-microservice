@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coit-backend2
+  labels:
+    app: coit-backend2
+spec:
+  selector:
+     matchLabels:
+       app: coit-backend2
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: coit-backend2
+    spec:
+      containers:
+        - image: coitlearning/coit-backend2:v1
+          imagePullPolicy: IfNotPresent
+          name: coit-backend2
+          ports:
+            - containerPort: 5000
