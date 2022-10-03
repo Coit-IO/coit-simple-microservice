@@ -27,9 +27,7 @@ jobs:
 
           unzip sonar-scanner-cli-$sonarscannerversion.zip -d $HOME/sonarqube
 
-          chmod 755
-          $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner
-      - name: Scan the frontend project
+- name: Scan the frontend project
         run: >
           cd coit-frontend
 
