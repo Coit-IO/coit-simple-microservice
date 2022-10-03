@@ -12,6 +12,9 @@ env:
   PROJECT_ID: '${{ secrets.GKE_PROJECT }}'
   GKE_CLUSTER: githubactions
   GKE_ZONE: us-central1-c
+  sonarqube_project: '${{ secrets.SONARQUBE_PROJECT }}'
+  api_key: '${{ secrets.API_KEY }}'
+  sonarqube_url: '${{ secrets.SONARQUBE_URL }}'
 jobs:
   buildandpush:
     runs-on: ubuntu-latest
@@ -26,19 +29,9 @@ jobs:
 
           chmod 755
           $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner
-      - name: Scan the project
-        env:
-          sonarqube_project: '${{ secrets.SONARQUBE_PROJECT }}'
-          api_key: '${{ secrets.API_KEY }}'
-          sonarqube_url: '${{ secrets.SONARQUBE_URL }}'
+      - name: Scan the frontend project
         run: >
-          Directories=('coit-frontend','coit-backend1','coit-backend2')
-
-          for list in ${Directories[@]};
-
-          do 
-
-          cd $list 
+          cd coit-frontend
 
           $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner 
           \
@@ -46,7 +39,17 @@ jobs:
             -Dsonar.sources=. \
             -Dsonar.host.url=$sonarqube_url \
             -Dsonar.login=$api_key 
-          done
+      - name: Scan the java project
+        run: >
+          cd coit-backend1
+
+          $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner 
+          \
+            -Dsonar.projectKey=$sonarqube_project \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=$sonarqube_url \
+            -Dsonar.login=$api_key \
+            -Dsonar.exclusions=./src/main/java/com/sa/web/*
       - name: Run Unit Tests
         run: |
           cd coit-frontend
@@ -61,13 +64,6 @@ jobs:
           DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
         run: |
           docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-      - name: Build the container Image
-        run: >
-          docker build coit-frontend -t 9676164428/coit-frontend:latest -f
-          coit-frontend/Dockerfile-multistage
-      - name: Push the container Image
-        run: |
-          docker push 9676164428/coit-frontend:latest
       - uses: >-
           google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
         with:
