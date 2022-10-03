@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: coit-backend1
+  name: sumaimagejava2
   labels:
-    app: coit-backend1
+    app: sumaimagejava2
 spec:
   selector:
     matchLabels:
-      app: coit-backend1
+      app: sumaimagejava2
   replicas: 3
   minReadySeconds: 15
   strategy:
@@ -18,12 +18,12 @@ spec:
   template:
     metadata:
       labels:
-        app: coit-backend1
+        app: sumaimagejava2
     spec:
       containers:
-      - image: 9676164428/coit-backend1:v1
+      - image: 9676164428/sumaimagejava2:v1
         imagePullPolicy: IfNotPresent
-        name: coit-backend1
+        name: sumaimagejava2
         ports:
           - containerPort: 8080
         env:

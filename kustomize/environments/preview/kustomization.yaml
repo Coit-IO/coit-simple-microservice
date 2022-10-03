@@ -8,5 +8,13 @@ replicas:
 - name: coit-frontend 
   count: 3
 
+resources:
+  - ../../coit-backend1
+
+replicas:
+- name: coit-backend1
+  count: 3
 
 namespace: preview
+
+
