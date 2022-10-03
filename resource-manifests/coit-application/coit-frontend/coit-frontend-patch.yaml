@@ -5,7 +5,7 @@ metadata:
 spec:
     spec:
       containers:
-        - image: coitlearning/coit-frontend:v3
+        - image: 9676164428/coit-frontend:v3
           imagePullPolicy: Always                         # 7
           name: coit-frontend
           ports:

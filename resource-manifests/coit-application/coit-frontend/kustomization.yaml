@@ -22,9 +22,9 @@ commonLabels:
   managed-by: kustomize
 
 images:
-  - newName: coitlearning/coit-frontend
+  - newName: 9676164428/coit-frontend
     newTag: v3
-    name: coitlearning/coit-frontend
+    name: 9676164428/coit-frontend
 
 configMapGenerator:
 - name: coit-frontend-config
