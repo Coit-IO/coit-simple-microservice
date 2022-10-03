@@ -8,6 +8,6 @@ resources:
 replicas:
 - name: coit-frontend 
   count: 3
-- name: coit-backend1
+- name: sumaimagejava2
   count: 3
 namespace: preview

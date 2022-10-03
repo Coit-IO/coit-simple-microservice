@@ -30,5 +30,5 @@ spec:
           - name: SA_LOGIC_API_URL
             valueFrom:
               configMapKeyRef:
-                name: coit-backend1-config 
+                name: sumaimagejava2-config 
                 key: python-url
