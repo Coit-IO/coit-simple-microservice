@@ -1,96 +1,93 @@
-# This is a basic workflow to help you get started with Actions .
-
 name: CI for coit-frontend
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "develop" branch
+'on':
   push:
-    branches: [ "develop" ]
+    branches:
+      - develop
   pull_request:
-    branches: [ "develop" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+    branches:
+      - develop
+  workflow_dispatch: null
 env:
   sonarscannerversion: 4.7.0.2747-linux
-  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: githubactions    # Add your cluster name here.
-  GKE_ZONE: us-central1-c   # Add your cluster zone here.
-
+  PROJECT_ID: '${{ secrets.GKE_PROJECT }}'
+  GKE_CLUSTER: githubactions
+  GKE_ZONE: us-central1-c
 jobs:
   buildandpush:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Sonar-Scanner  
-        run: |
-          wget "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$sonarscannerversion.zip"
-          unzip sonar-scanner-cli-$sonarscannerversion.zip -d $HOME/sonarqube
-          chmod 755 $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner
+      - name: Setup Sonar-Scanner
+        run: >
+          wget
+          "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$sonarscannerversion.zip"
 
+          unzip sonar-scanner-cli-$sonarscannerversion.zip -d $HOME/sonarqube
+
+          chmod 755
+          $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner
       - name: Scan the project
-        env: 
-          sonarqube_project: ${{ secrets.SONARQUBE_PROJECT }} 
-          api_key: ${{ secrets.API_KEY }}
-          sonarqube_url: ${{ secrets.SONARQUBE_URL }}
-        run: |
+        env:
+          sonarqube_project: '${{ secrets.SONARQUBE_PROJECT }}'
+          api_key: '${{ secrets.API_KEY }}'
+          sonarqube_url: '${{ secrets.SONARQUBE_URL }}'
+        run: >
           Directories=('coit-frontend','coit-backend1','coit-backend2')
+
           for list in ${Directories[@]};
+
           do 
+
           cd $list 
-          $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner  \
+
+          $HOME/sonarqube/sonar-scanner-$sonarscannerversion/bin/sonar-scanner 
+          \
             -Dsonar.projectKey=$sonarqube_project \
             -Dsonar.sources=. \
             -Dsonar.host.url=$sonarqube_url \
             -Dsonar.login=$api_key 
           done
       - name: Run Unit Tests
-        run: | 
+        run: |
           cd coit-frontend
           npm test || true
-
-      - name: Check the Vulnaribilities of Dependencies 
-        run: | 
+      - name: Check the Vulnaribilities of Dependencies
+        run: |
           cd coit-frontend
           npm audit || true
-
       - name: Docker Login
         env:
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
+          DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
         run: |
           docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-
       - name: Build the container Image
-        run: | 
-          docker build coit-frontend -t 9676164428/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
-
+        run: >
+          docker build coit-frontend -t 9676164428/coit-frontend:latest -f
+          coit-frontend/Dockerfile-multistage
       - name: Push the container Image
-        run: | 
+        run: |
           docker push 9676164428/coit-frontend:latest
-
-      - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+      - uses: >-
+          google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
         with:
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
-
-      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+          service_account_key: '${{ secrets.GKE_SA_KEY }}'
+          project_id: '${{ secrets.GKE_PROJECT }}'
+      - uses: >-
+          google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
         with:
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_ZONE }}
-          credentials: ${{ secrets.GKE_SA_KEY }}
-
-      - name: Deploy the GKE Cluster 
-        run: | 
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          location: '${{ env.GKE_ZONE }}'
+          credentials: '${{ secrets.GKE_SA_KEY }}'
+      - name: Deploy the GKE Cluster
+        run: |
           cd kustomize/environments/preview
           kubectl apply -k .
       - name: Wait for a minute to view the preview of the application
-        run: |
+        run: >
           sleep 100
-          echo "Browse below IP addressto preview the application"
-          kubectl get svc coit-frontend-lb --output jsonpath='{.status.loadBalancer.ingress[0].ip}'
-      
 
+          echo "Browse below IP addressto preview the application"
+
+          kubectl get svc coit-frontend-lb --output
+          jsonpath='{.status.loadBalancer.ingress[0].ip}'
