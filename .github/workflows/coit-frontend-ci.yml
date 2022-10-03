@@ -49,7 +49,7 @@ jobs:
             -Dsonar.sources=. \
             -Dsonar.host.url=$sonarqube_url \
             -Dsonar.login=$api_key 
-            -sonar.exclusions=src/main/java/**
+            -Dsonar.exclusions=src/main/java/*
       - name: Run Unit Tests
         run: |
           cd coit-frontend
