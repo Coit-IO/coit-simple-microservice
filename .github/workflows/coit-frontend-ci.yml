@@ -86,8 +86,6 @@ jobs:
         run: | 
           cd kustomize/environments/preview
           kubectl apply -k .
-          cd kustomize/environments/preview/java
-          kubectl apply -k .
       - name: Wait for a minute to view the preview of the application
         run: |
           sleep 100
