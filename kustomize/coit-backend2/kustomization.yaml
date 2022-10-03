@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - coit-backend2-deployment.yaml
-  - service-coit-backend2-lb.yaml
+  - service-coit-backend-lb.yaml
 
 replicas:
 - name: sumapython 
