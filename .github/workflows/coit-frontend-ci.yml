@@ -62,8 +62,8 @@ jobs:
       - name: Push the container Image
         run: | 
           docker push 9676164428/coit-frontend:latest
-          docker push 9676164428/coit-backend1:latest
-          docker push 9676164428/coit-backend2:latest
+          docker push 9676164428/sumaimagejava2:latest
+          docker push 9676164428/sumapython:latest
 
       - uses: >-
           google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
