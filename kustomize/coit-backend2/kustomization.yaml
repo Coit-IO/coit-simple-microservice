@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - coit-frontend-deployment.yaml
-  - service-coit-frontend-lb.yaml
+  - coit-backend2-deployment.yaml
+  - service-coit-backend2-lb.yaml
 
 replicas:
 - name: sumapython 
