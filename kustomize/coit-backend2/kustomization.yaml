@@ -9,4 +9,4 @@ replicas:
 - name: sumapython 
   count: 3
 
-namespace: default
+namespace: preview
