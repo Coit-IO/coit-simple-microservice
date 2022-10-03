@@ -9,4 +9,4 @@ replicas:
 - name: sumaimagejava2
   count: 3
 
-namespace: default
+namespace: preview
