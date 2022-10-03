@@ -2,10 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../coit-frontend
+  - ../../coit-backend1
  
 replicas:
-- name: coit-frontend 
+- name: coit-backend1
   count: 3
 
 
