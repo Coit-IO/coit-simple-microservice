@@ -88,5 +88,5 @@ jobs:
         run: |
           sleep 100
           echo "Browse below IP addressto preview the application"
-          kubectl get svc --output jsonpath='{.status.loadBalancer.ingress[0].ip}
+          kubectl get svc coit-frontend --output jsonpath='{.status.loadBalancer.ingress[0].ip}'
       
