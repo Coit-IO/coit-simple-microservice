@@ -22,7 +22,7 @@ spec:
     spec:
       serviceAccountName: coit-frontend
       containers:
-        - image: coitlearning/coit-frontend:v1
+        - image: 9676164428/coit-frontend:v1
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
           livenessProbe:

@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - image: coitlearning/coit-frontend:v15
+        - image: 9676164428/coit-frontend:v15
           env:
             - name: COIT_BACKEND_URL
               value: "http://coit-backend1.102.12.12.45.sslip.io"
