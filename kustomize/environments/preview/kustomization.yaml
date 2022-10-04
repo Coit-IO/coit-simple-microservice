@@ -3,9 +3,14 @@ kind: Kustomization
 
 resources:
   - ../../coit-frontend
+<<<<<<< HEAD
   - ../../sumaimagejava2
   - ../../sumapython
 
+=======
+  - ../../coit-backend1
+  - ../../coit-backend2
+>>>>>>> 44a247afc78a540304ecb628e4576da6e4c60380
  
   
 replicas:
@@ -14,6 +19,10 @@ replicas:
 - name: sumaimagejava2
   count: 3
 - name: sumapython
+  count: 3
+- name: coit-backend1
+  count: 3
+- name: coit-backend2
   count: 3
 
 
