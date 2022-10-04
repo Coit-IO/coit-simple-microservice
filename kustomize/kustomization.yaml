@@ -3,9 +3,18 @@ kind: Kustomization
 
 resources:
   - coit-frontend
-
+  - sumaimagejava2  
+  - sumapython
+  
 replicas:
-- name: coit-frontend 
+- name: coit-frontend
+  count: 3
+- name: sumaimagejava2
+  count: 3
+- name: sumapython
   count: 3
 
-namespace: default
+
+
+
+namespace: preview

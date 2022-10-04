@@ -5,7 +5,7 @@ RUN mvn install
 
 FROM gcr.io/distroless/java11-debian11
 # Environment Variable that defines the endpoint of sentiment-analysis python api.
-ENV SA_LOGIC_API_URL http://34.132.219.56:5000
+ENV SA_LOGIC_API_URL http://localhost:5000
 EXPOSE 8080
 CMD ["java", "-jar", "sentiment-analysis-web-0.0.2-SNAPSHOT.jar", "--sa.logic.api.url=${SA_LOGIC_API_URL}"]
 COPY --from=build /usr/app/target/sentiment-analysis-web-0.0.2-SNAPSHOT.jar /
