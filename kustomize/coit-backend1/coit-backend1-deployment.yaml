@@ -21,7 +21,7 @@ spec:
         app: sumaimagejava2
     spec:
       containers:
-      - image: 9676164428/sumaimagejava2:v1
+      - image: 9676164428/sumaimagejava2:latest
         imagePullPolicy: Always
         name: sumaimagejava2
         ports:
