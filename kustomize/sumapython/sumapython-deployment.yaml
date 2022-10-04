@@ -21,7 +21,7 @@ spec:
         app: sumapython
     spec:
       containers:
-        - image: 9676164428/sumapython:latest
+        - image: 9676164428/sumapython:v1
           imagePullPolicy: Always
           name: sumapython
           ports:
