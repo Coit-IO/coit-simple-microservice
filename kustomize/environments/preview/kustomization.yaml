@@ -3,9 +3,15 @@ kind: Kustomization
 
 resources:
   - ../../coit-frontend
+  - ../../coit-backend1
+  - ../../coit-backend2
  
 replicas:
 - name: coit-frontend 
+  count: 3
+- name: coit-backend1
+  count: 3
+- name: coit-backend2
   count: 3
 
 namespace: preview
