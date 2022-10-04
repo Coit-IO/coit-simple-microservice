@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - image: 9676164428/sumaimagejava2:v1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: sumaimagejava2
         ports:
           - containerPort: 8080

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - image: 9676164428/sumapython:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: sumapython
           ports:
             - containerPort: 5000
