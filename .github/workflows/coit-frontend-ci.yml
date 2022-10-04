@@ -47,23 +47,6 @@ jobs:
         run: |
           cd coit-frontend
           npm audit || true
-      - name: Docker Login
-        env:
-          DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
-          DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
-        run: |
-          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-      - name: Build the container Image
-        run: | 
-          docker build coit-frontend -t 9676164428/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
-          docker build coit-backend1 -t 9676164428/sumaimagejava2:latest -f coit-backend1/Dockerfile-multistage
-          docker build coit-backend2 -t 9676164428/sumapython:latest -f coit-backend2/Dockerfile
-
-      - name: Push the container Image
-        run: | 
-          docker push 9676164428/coit-frontend:latest
-          docker push 9676164428/sumaimagejava2:latest
-          docker push 9676164428/sumapython:latest
 
       - uses: >-
           google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
