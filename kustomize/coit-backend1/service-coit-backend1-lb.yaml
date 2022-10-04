@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: coit-backend1-lb
+  name: coit-backend1
 spec:
   type: LoadBalancer
   ports:
