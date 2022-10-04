@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: coit-frontend
+      app: sumaimagejava2
   replicas: 3
   minReadySeconds: 15
   strategy:
