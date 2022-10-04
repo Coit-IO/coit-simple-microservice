@@ -8,7 +8,7 @@ spec:
   selector:
      matchLabels:
        app: sumapython
-  replicas: 2
+  replicas: 3
   minReadySeconds: 15
   strategy:
     type: RollingUpdate

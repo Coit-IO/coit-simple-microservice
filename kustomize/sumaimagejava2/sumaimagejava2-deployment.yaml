@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: sumaimagejava2
-  replicas: 3
+  replicas: 2
   minReadySeconds: 15
   strategy:
     type: RollingUpdate
