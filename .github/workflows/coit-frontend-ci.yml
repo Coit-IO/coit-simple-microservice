@@ -86,3 +86,17 @@ jobs:
 
           echo "Browse below IP addressto preview the application"
           kubectl get svc coit-frontend-lb --output jsonpath='{.status.loadBalancer.ingress[0].ip}'
+      - name: Check the sonarqube report here
+        run: | 
+          SONAR_URL=`kubectl get svc sonarqube-sonarqube --output jsonpath='{.status.loadBalancer.ingress[0].ip}' -n sonarqube`
+          echo "The SonarQube Reports are available at $SONAR_URL"
+      - name: Wait for 60 seconds and get the preview of the applicaton
+        run: | 
+          sleep 60
+          PRIVEW_URL=`kubectl get svc coit-frontend-lb --output jsonpath='{.status.loadBalancer.ingress[0].ip}' -n preview`
+          echo "This is app preview URL $PRIVEW_URL"
+      
+      # - name: Delete preview namespace
+      #   run: | 
+      #   sleep 15m
+      #   kubectl delete namespace preview
