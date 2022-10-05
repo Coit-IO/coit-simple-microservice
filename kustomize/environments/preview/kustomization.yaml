@@ -15,4 +15,4 @@ replicas:
   count: 3
 
 
-namespace: preview
+namespace: suma

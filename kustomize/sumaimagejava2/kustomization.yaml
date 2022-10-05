@@ -4,9 +4,10 @@ kind: Kustomization
 resources:
   - sumaimagejava2-deployment.yaml
   - service-sumaimagejava2-lb.yaml
+  - sumaimagejava2-config.yaml
 
 replicas:
 - name: sumaimagejava2
   count: 3
 
-namespace: preview
+namespace: suma

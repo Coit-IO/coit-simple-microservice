@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sumaimagejava2-config
+data:
+  # property-like keys; each key maps to a simple value
+  python-url: "http://34.132.102.242:5000"
+

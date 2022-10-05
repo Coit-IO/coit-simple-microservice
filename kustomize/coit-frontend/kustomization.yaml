@@ -9,4 +9,4 @@ replicas:
 - name: coit-frontend 
   count: 3
 
-namespace: preview
+namespace: suma
