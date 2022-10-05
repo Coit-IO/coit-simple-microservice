@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - sumaimagejava2-deployment.yaml
+  - service-sumaimagejava2-lb.yaml
+
+replicas:
+- name: sumaimagejava2
+  count: 3
+
+namespace: preview

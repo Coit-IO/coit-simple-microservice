@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: coit-backend2
+  name: sumapython
   labels:
-    app: coit-backend2
+    app: sumapython
 spec:
   selector:
      matchLabels:
-       app: coit-backend2
-  replicas: 2
+       app: sumapython
+  replicas: 3
   minReadySeconds: 15
   strategy:
     type: RollingUpdate
@@ -18,11 +18,11 @@ spec:
   template:
     metadata:
       labels:
-        app: coit-backend2
+        app: sumapython
     spec:
       containers:
-        - image: 9676164428/coit-backend2:v1
-          imagePullPolicy: IfNotPresent
-          name: coit-backend2
+        - image: 9676164428/sumapython:v1
+          imagePullPolicy: Always
+          name: sumapython
           ports:
             - containerPort: 5000
