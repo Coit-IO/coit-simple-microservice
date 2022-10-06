@@ -2,7 +2,7 @@ name: Deploy to production
 on:
   create:
     tags:
-     - 'v123'
+     - 'v*'
 
 env:
   sonarscannerversion: 4.7.0.2747-linux
@@ -28,11 +28,11 @@ jobs:
 
       - name: Build the container Image
         run: | 
-          docker build coit-frontend -t 9676164428/coit-frontend:$GITHUB_REF -f coit-frontend/Dockerfile-multistage
+          docker build coit-frontend -t 9676164428/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
 
       - name: Push the container Image
         run: | 
-          docker push 9676164428/coit-frontend:$GITHUB_REF
+          docker push 9676164428/coit-frontend:latest
           
       - uses: >-
           google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
