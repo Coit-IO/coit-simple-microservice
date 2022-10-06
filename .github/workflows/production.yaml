@@ -3,6 +3,7 @@ on:
   create:
     tags:
      - 'v*'
+    workflow_dispatch: null
 
 env:
   sonarscannerversion: 4.7.0.2747-linux
