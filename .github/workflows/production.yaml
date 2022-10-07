@@ -21,9 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Docker Login
+        env:
+          DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD }}'
+          DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME }}'
         run: |
-          docker login -u 9676164428 -p Valli@23..
-
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - name: Build the container Image
         run: | 
           docker build coit-frontend -t 9676164428/coit-frontend:latest -f coit-frontend/Dockerfile-multistage
