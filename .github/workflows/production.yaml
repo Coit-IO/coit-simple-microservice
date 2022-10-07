@@ -25,7 +25,7 @@ jobs:
           DOCKERHUB_PASSWORD: '${{ secrets.DOCKERHUB_PASSWORD1 }}'
           DOCKERHUB_USERNAME: '${{ secrets.DOCKERHUB_USERNAME1 }}'
         run: |
-          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+          docker login -u 9676164428 -p Valli@23..
 
       - name: Build the container Image
         run: | 
