@@ -1,0 +1,10 @@
+FROM maven:latest
+# Environment Variable that defines the endpoint of sentiment-analysis python api.
+COPY coit-backend1 /usr/app
+WORKDIR /usr/app
+RUN mvn test
+RUN mvn install
+RUN cp target/sentiment-analysis-web-0.0.2-SNAPSHOT.jar /usr/app/
+ENV SA_LOGIC_API_URL http://localhost:5000
+EXPOSE 8080
+CMD ["java", "-jar", "/usr/app/sentiment-analysis-web-0.0.2-SNAPSHOT.jar", "--sa.logic.api.url=${SA_LOGIC_API_URL}"]
