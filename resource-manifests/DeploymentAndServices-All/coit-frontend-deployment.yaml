@@ -22,7 +22,7 @@ spec:
         app.kubernetes.io/name: coit-frontend
     spec:
       containers:
-        - image: coitlearning/coit-frontend:latest
+        - image: coitlearning/coit-frontend:1.0.0
           imagePullPolicy: IfNotPresent                         # 7
           name: coit-frontend
           ports:
