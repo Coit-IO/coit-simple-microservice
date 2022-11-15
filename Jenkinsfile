@@ -12,6 +12,9 @@ pipeline {
                 echo 'Testing..'
             }
         }
+triggers {
+        cron('H/15 * * * *')
+    }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
