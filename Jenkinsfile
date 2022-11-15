@@ -12,13 +12,12 @@ pipeline {
                 echo 'Testing..'
             }
         }
-triggers {
-        cron('H/15 * * * *')
-    }
-        stage('Deploy') {
+
+stage('sign the container image') {
             steps {
-                echo 'Deploying....'
-            }
-        }
+                sh 'cosign version'
+                sh 'cosign sign --key cosign.key 9676164428/coit-frontend:v1'
+      }
+    }
     }
 }
