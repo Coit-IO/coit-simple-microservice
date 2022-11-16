@@ -23,6 +23,6 @@ spec:
           - keys:
               publicKeys: |-
                 -----BEGIN PUBLIC KEY-----
-                MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEPAV6p+4djYQF2UiB+uAVphB/w105
-                L2XAIZ14JjmnJHxjPOEFh0QvSnPBdp4j44I5s0ALSxDyr/5REbKPlBSvOQ==
+                MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7GESSQ8oMXG5DzL3WpUP51neD4uO
+                TlWVFW5wdZzU/ezDYoqwpuptVr9o62WVsHNSAymxsyMeDevc9eBQAbHjdA==
                 -----END PUBLIC KEY-----
