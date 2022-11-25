@@ -44,6 +44,10 @@ jobs:
             -Dsonar.host.url=$sonarqube_url \
             -Dsonar.login=$api_key 
 
+      - name: Check the sonarqube report here
+        run: | 
+          echo "The SonarQube Reports are available at http://34.93.215.59:9000/dashboard?id=coit-frontend"
+
       - name: Run Unit Tests
         run: | 
           cd coit-frontend
@@ -84,3 +88,10 @@ jobs:
         run: | 
           cd kustomize/environments/preview
           kubectl apply -k .
+
+      - name: Wait for 60 seconds and get the preview of the application 
+        run: | 
+          sleep 100
+          echo "Browse below IP adress to preview the application"
+          kubectl get svc coit-frontend --output jsonpath='{.status.loadBalancer.ingress[0].ip}' -n preview
+          
