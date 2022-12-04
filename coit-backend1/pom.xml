@@ -59,12 +59,12 @@
 		<repository>
 			<id>backend1-release</id>
 			<name>backend1-release</name>
-			<url>http://44.199.209.26:8081/repository/backend1-release/</url>
+			<url>http://3.224.127.39:8081/repository/backend1-release/</url>
 		</repository>
 		<snapshotRepository>
 			<id>backend-1-snapshot</id>
 			<name>backend-1-snapshot</name>
-			<url>http://44.199.209.26:8081/repository/backend-1-snapshot/</url>
+			<url>http://3.224.127.39:8081/repository/backend-1-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
