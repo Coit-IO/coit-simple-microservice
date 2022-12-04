@@ -57,14 +57,14 @@
 	</build>
 	<distributionManagement>
 		<repository>
-			<id>coit-maven-repo-release</id>
-			<name>coit-maven-repo-release</name>
-			<url>http://52.66.178.125:8081/repository/coit-maven-repo-release/</url>
+			<id>backend1-release</id>
+			<name>backend1-release</name>
+			<url>http://44.199.209.26:8081/repository/backend1-release/</url>
 		</repository>
 		<snapshotRepository>
-			<id>coit-maven-repo-snapshot</id>
-			<name>coit-maven-repo-snapshot</name>
-			<url>http://52.66.178.125:8081/repository/coit-maven-repo-snapshot/</url>
+			<id>backend-1-snapshot</id>
+			<name>backend-1-snapshot</name>
+			<url>http://44.199.209.26:8081/repository/backend-1-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
