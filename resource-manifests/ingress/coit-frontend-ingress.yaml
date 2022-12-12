@@ -3,11 +3,18 @@ kind: Ingress
 metadata:
   name: coit-frontend
   annotations:
+    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - frontend.k8slabs.tk
+    secretName: frontendurl-cert
   rules:
-  - http:
+  - host: frontend.k8slabs.tk
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -16,3 +23,4 @@ spec:
             name: coit-frontend-lb
             port:
               number: 80
+

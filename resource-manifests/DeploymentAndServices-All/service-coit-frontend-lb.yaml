@@ -3,7 +3,7 @@ kind: Service              # 1
 metadata:
   name: coit-frontend-lb
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 80               # 3
     protocol: TCP          # 4
