@@ -15,3 +15,16 @@ images:
   newTag: 1.0.1
 
 namespace: default
+
+commonLabels:
+  customer: southvalley
+  owner: basil
+  app: frontend
+
+commonAnnotations:
+  customer: southvalley
+  owner: basil
+  app: frontend
+
+namePrefix: customer1-
+nameSuffix: -dev
