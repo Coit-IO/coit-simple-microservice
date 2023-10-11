@@ -6,6 +6,11 @@ resources:
 
 replicas:
 - name: coit-frontend 
-  count: 5
+  count: 4
 
-namespace: default
+images:
+- name: coitlearning/coit-frontend
+  newName: coitlearning/coit-frontend
+  newTag: 9
+
+namespace: staging
