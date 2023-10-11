@@ -8,4 +8,9 @@ replicas:
 - name: coit-frontend 
   count: 10
 
+images:
+- name: coitlearning/coit-frontend
+  newName: coitlearning/coit-frontend
+  newTag: 1.0.1
+  
 namespace: production
