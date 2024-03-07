@@ -1,0 +1,61 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    meta.helm.sh/release-name: monitoring-stack
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2024-03-07T05:44:39Z"
+  generation: 1
+  labels:
+    app: kube-prometheus-stack
+    app.kubernetes.io/instance: monitoring-stack
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 56.21.1
+    chart: kube-prometheus-stack-56.21.1
+    heritage: Helm
+    release: monitoring-stack
+  name: monitoring-stack-kube-prom-node.rules
+  namespace: default
+  resourceVersion: "2534"
+  uid: d9a8ecf2-9b4c-4206-a4c8-412dda85a408
+spec:
+  groups:
+  - name: node.rules
+    rules:
+    - expr: |-
+        topk by (cluster, namespace, pod) (1,
+          max by (cluster, node, namespace, pod) (
+            label_replace(kube_pod_info{job="kube-state-metrics",node!=""}, "pod", "$1", "pod", "(.*)")
+        ))
+      record: 'node_namespace_pod:kube_pod_info:'
+    - expr: |-
+        count by (cluster, node) (
+          node_cpu_seconds_total{mode="idle",job="node-exporter"}
+          * on (cluster, namespace, pod) group_left(node)
+          topk by (cluster, namespace, pod) (1, node_namespace_pod:kube_pod_info:)
+        )
+      record: node:node_num_cpu:sum
+    - expr: |-
+        sum(
+          node_memory_MemAvailable_bytes{job="node-exporter"} or
+          (
+            node_memory_Buffers_bytes{job="node-exporter"} +
+            node_memory_Cached_bytes{job="node-exporter"} +
+            node_memory_MemFree_bytes{job="node-exporter"} +
+            node_memory_Slab_bytes{job="node-exporter"}
+          )
+        ) by (cluster)
+      record: :node_memory_MemAvailable_bytes:sum
+    - expr: |-
+        avg by (cluster, node) (
+          sum without (mode) (
+            rate(node_cpu_seconds_total{mode!="idle",mode!="iowait",mode!="steal",job="node-exporter"}[5m])
+          )
+        )
+      record: node:node_cpu_utilization:ratio_rate5m
+    - expr: |-
+        avg by (cluster) (
+          node:node_cpu_utilization:ratio_rate5m
+        )
+      record: cluster:node_cpu:ratio_rate5m
