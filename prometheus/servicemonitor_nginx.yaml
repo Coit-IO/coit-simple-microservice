@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+    meta.helm.sh/release-name: monitoring-stack
+    meta.helm.sh/release-namespace: default
+  labels:
+    app: kube-prometheus-stack-alertmanager
+    app.kubernetes.io/instance: monitoring-stack
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 56.21.1
+    chart: kube-prometheus-stack-56.21.1
+    heritage: Helm
+    release: monitoring-stack
+  name: nginx
+  namespace: default
+spec:
+  endpoints:
+  - path: /metrics
+    port: metrics
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: nginx
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: nginx
+      app.kubernetes.io/version: 1.25.4
+      helm.sh/chart: nginx-15.14.0
