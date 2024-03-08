@@ -1,0 +1,30 @@
+version: "prometheus/v1"
+service: "mywebsite-slo"
+labels:
+  owner: "devopsteam"
+  repo: "myorg/myservice"
+  tier: "2"
+slos:
+  # We allow failing (5xx and 429) 1 request every 1000 requests (99.9%).
+  - name: "requests-availability"
+    objective: 99.5
+    description: "Common SLO based on availability for HTTP request responses of mywebsite."
+    sli:
+      events:
+        error_query: sum(rate(promhttp_metric_handler_requests_total{job="nginx",code=~"(5..)"}[{{.window}}]))
+        total_query: sum(rate(promhttp_metric_handler_requests_total{job="nginx"}[{{.window}}]))
+    alerting:
+      name: MyWebsiteHighErrorRate
+      labels:
+        category: "availability"
+      annotations:
+        # Overwrite default Sloth SLO alert summmary on ticket and page alerts.
+        summary: "High error rate on 'mywebsite' requests responses"
+      page_alert:
+        labels:
+          severity: pageteam
+          routing_key: myteam
+      ticket_alert:
+        labels:
+          severity: "slack"
+          slack_channel: "#alerts-myteam"
